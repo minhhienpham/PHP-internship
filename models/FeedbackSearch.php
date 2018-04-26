@@ -18,8 +18,7 @@ class FeedbackSearch extends Feedback
     public function rules()
     {
         return [
-            [['email'], 'safe'],
-            [['message'], 'integer'],
+            [['email', 'message'], 'safe'],
         ];
     }
 
@@ -58,11 +57,8 @@ class FeedbackSearch extends Feedback
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'message' => $this->message,
-        ]);
-
-        $query->andFilterWhere(['like', 'email', $this->email]);
+        $query->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'message', $this->message]);
 
         return $dataProvider;
     }
